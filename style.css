@@ -1,0 +1,239 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Paleta de tonos nude y rosado champán */
+:root {
+  --primario: #fff8f4;         /* fondo de la carta */
+  --fondo: #f5ebe6;            /* fondo general */
+  --fondo-sobre: #f1ded3;      /* marco exterior */
+  --solapa-sobre: #e7cfc2;     /* solapa superior */
+  --cuerpo-sobre: #e3c2b4;     /* cuerpo del sobre */
+  --sombra: rgba(150, 90, 60, 0.25); /* sombra suave cálida */
+  --texto: #4b2e2b;            /* marrón oscuro suave */
+  --borde: #d4b6a8;            /* bordes */
+  --acento: #c97d63;           /* acento rosado nude */
+  --acento-2: #dfb7a6;         /* acento claro */
+  --ring: #d89c80cc;           /* anillo de enfoque */
+}
+
+/* Página */
+body {
+  background: linear-gradient(160deg, #f5ebe6 0%, #f7e4db 100%);
+  color: var(--texto);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 24px;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Título */
+h1 {
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(28px, 5vw, 38px);
+  margin-bottom: 24px;
+  color: var(--acento);
+  letter-spacing: 1px;
+}
+
+/* Contenedor */
+.contenedor {
+  width: min(92vw, 820px);
+}
+
+/* Marco exterior */
+.envoltura-sobre {
+  position: relative;
+  background-color: var(--fondo-sobre);
+  border: 1px solid #ffffff80;
+  box-shadow: 0 12px 30px var(--sombra);
+  border-radius: 18px;
+  padding: 8px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.envoltura-sobre:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 38px var(--sombra);
+}
+
+/* Sobre */
+.sobre {
+  position: relative;
+  width: 100%;
+  height: clamp(260px, 48vw, 360px);
+  background: linear-gradient(180deg, #e3c2b4, #f1d5c9);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Solapa superior del sobre */
+.sobre::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 4;
+  border-top: 180px solid var(--solapa-sobre);
+  border-right: 200px solid transparent;
+  border-left: 200px solid transparent;
+  transform-origin: top;
+  transition: all 0.5s ease-in-out 0.7s;
+  border-radius: 10px;
+}
+
+/* Solapas laterales */
+.solapa-derecha,
+.solapa-izquierda {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--cuerpo-sobre);
+}
+
+.solapa-derecha {
+  right: 0;
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-left: 1px dashed #e0b8a6;
+}
+
+.solapa-izquierda {
+  left: 0;
+  clip-path: polygon(0 0, 0 100%, 100% 100%);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-right: 1px dashed #e0b8a6;
+}
+
+/* Carta */
+.carta {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primario);
+  text-align: left;
+  box-shadow: 0 6px 18px var(--sombra);
+  padding: clamp(14px, 3vw, 22px);
+  border-radius: 12px;
+  border: 1px solid #ffffff40;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease;
+  opacity: 0;
+}
+
+/* Contenido de la carta */
+.contenido {
+  color: var(--texto);
+  font-size: clamp(14px, 2vw, 16px);
+  line-height: 1.75;
+  height: 100%;
+  overflow-y: auto;
+  padding: clamp(10px, 2vw, 16px);
+  border: 1px dashed var(--borde);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #fff9f5 0%, #fff4ee 100%);
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+}
+
+.contenido strong {
+  color: var(--acento);
+  font-weight: 700;
+}
+.contenido em {
+  color: var(--acento-2);
+  font-style: italic;
+}
+
+/* Corazón (oculto pero mantiene estructura del sobre original) */
+.corazon {
+  display: none !important;
+}
+
+/* Estados dinámicos */
+.abierto .sobre::before {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
+
+.carta.mostrar-carta,
+.carta.cerrando-carta {
+  transform: translateY(calc(-100% + 10px));
+  opacity: 1;
+}
+
+.carta.abierta {
+  z-index: 10;
+  opacity: 1;
+}
+
+.envoltura-sobre.desactivar-sobre .sobre::before {
+  pointer-events: none;
+}
+
+/* Frase inferior */
+.franja {
+  margin-top: 28px;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-size: 15px;
+  color: #7a5a4d;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+/* Footer */
+.foot {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 13px;
+  color: #997366;
+  opacity: 0.7;
+}
+
+/* Scrollbar */
+.contenido::-webkit-scrollbar { width: 10px; }
+.contenido::-webkit-scrollbar-track { background-color: transparent; }
+.contenido::-webkit-scrollbar-thumb {
+  background-color: #e3c2b4;
+  border-radius: 8px;
+  border: 2px solid #fff2ea;
+}
+.contenido::-webkit-scrollbar-thumb:hover {
+  background-color: #d6a88d;
+}
+
+/* Focus accesible */
+.contenido:focus-visible,
+.carta:focus-visible,
+.envoltura-sobre:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* Responsivo */
+@media screen and (max-width: 480px) {
+  .contenedor { width: 100%; }
+  .sobre { height: 300px; }
+  .contenido { font-size: 15px; }
+}
+
+@media screen and (max-width: 360px) {
+  .sobre { height: 280px; }
+}
