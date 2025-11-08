@@ -237,3 +237,76 @@ h1 {
 @media screen and (max-width: 360px) {
   .sobre { height: 280px; }
 }
+/* ===== Ajustes de ancho y responsividad (añadir al final) ===== */
+
+/* 1) Limitar el ancho general: carta más esbelta */
+.contenedor{
+  width: min(92vw, 560px); /* antes 820px */
+  margin-inline: auto;
+}
+
+/* 2) El “sobre” conserva proporción y no se ve gigante */
+.sobre{
+  max-width: 560px;
+  margin-inline: auto;
+  /* altura controlada por relación; se ve más armónico en móviles */
+  aspect-ratio: 4 / 3;        /* usa alto proporcional */
+  height: auto;               /* deja que el ratio mande */
+}
+
+/* 3) Carta: padding más contenido y tipografía legible */
+.carta{
+  padding: clamp(12px, 2.6vw, 18px);
+}
+
+/* 4) Contenido interno: caja más cómoda y texto equilibrado */
+.contenido{
+  font-size: clamp(14px, 1.9vw, 16px);
+  line-height: 1.7;
+  padding: clamp(10px, 2.4vw, 16px);
+  /* altura máxima para que no “apriete” en pantallas bajas */
+  max-height: 62vh;
+}
+
+/* 5) Solapa superior: ajustar triángulo al nuevo ancho/ratio */
+.sobre::before{
+  /* bordes proporcionales al nuevo ancho */
+  border-top: 55% solid var(--solapa-sobre); /* antes 180px fijos */
+  border-right: 50% solid transparent;
+  border-left: 50% solid transparent;
+}
+
+/* ===== Breakpoints ===== */
+
+/* Tablets ~ 768px: un pelín más amplia, pero moderada */
+@media (min-width: 768px){
+  .contenedor{ width: min(90vw, 620px); }
+  .sobre{ max-width: 620px; aspect-ratio: 5 / 4; }
+  .contenido{ max-height: 58vh; }
+}
+
+/* Celulares medianos (≤ 480px): compacta y cómoda */
+@media (max-width: 480px){
+  .contenedor{ width: 94vw; }
+  .sobre{ aspect-ratio: 5 / 4; }         /* sube algo la altura útil */
+  .carta{ padding: 12px; }
+  .contenido{
+    font-size: 15px;
+    line-height: 1.65;
+    padding: 12px;
+    max-height: 64vh;                    /* más aire en pantallas bajas */
+  }
+  /* sombras un poco más suaves para no “comerse” el espacio */
+  .envoltura-sobre{ box-shadow: 0 8px 22px var(--sombra); }
+}
+
+/* Celulares pequeños (≤ 360px) */
+@media (max-width: 360px){
+  .sobre{ aspect-ratio: 6 / 5; }
+  .contenido{
+    font-size: 14.5px;
+    padding: 10px;
+    max-height: 66vh;
+  }
+}
+
