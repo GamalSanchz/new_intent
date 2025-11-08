@@ -309,4 +309,77 @@ h1 {
     max-height: 66vh;
   }
 }
+/* === FIX RESPONSIVE: carta menos ancha y sobre compacto === */
+
+/* Desktop/General: reduce el ancho máximo */
+.contenedor{
+  width: min(92vw, 520px);
+  margin-inline: auto;
+}
+
+.sobre{
+  width: 100%;
+  max-width: 520px;
+  height: auto;            /* evita alturas fijas */
+  aspect-ratio: 5 / 4;     /* proporción controlada */
+  margin-inline: auto;
+}
+
+/* La solapa superior debe ser proporcional (sin px fijos) */
+.sobre::before{
+  border-top: 50% solid var(--solapa-sobre);
+  border-right: 50% solid transparent;
+  border-left: 50% solid transparent;
+}
+
+/* Carta y texto más contenidos */
+.carta{ padding: clamp(12px, 2.6vw, 18px); }
+.contenido{
+  font-size: clamp(14px, 1.9vw, 16px);
+  line-height: 1.7;
+  padding: clamp(10px, 2.2vw, 16px);
+  max-height: 62vh;         /* evita que “ahogue” la pantalla */
+}
+
+/* --- Mobile: ≤ 480px --- */
+@media (max-width: 480px){
+  h1{
+    font-size: 22px;
+    margin: 10px 0 14px;
+  }
+  .contenedor{ width: 92vw; }
+
+  .envoltura-sobre{ padding: 6px; box-shadow: 0 8px 22px var(--sombra); }
+
+  .sobre{
+    aspect-ratio: 6 / 5;     /* un poco más alta que ancha */
+    border-radius: 14px;
+  }
+  .sobre::before{
+    border-top: 46% solid var(--solapa-sobre); /* solapa más pequeña */
+  }
+
+  .carta{ padding: 12px; }
+  .contenido{
+    font-size: 15px;
+    line-height: 1.65;
+    padding: 12px;
+    max-height: 58vh;
+  }
+}
+
+/* --- Pantallas muy pequeñas: ≤ 360px --- */
+@media (max-width: 360px){
+  .sobre{ aspect-ratio: 7 / 6; }
+  .contenido{
+    font-size: 14.5px;
+    padding: 10px;
+    max-height: 60vh;
+  }
+}
+
+/* --- Alturas bajas (móviles con barra grande) --- */
+@media (max-height: 700px){
+  .contenido{ max-height: 50vh; }
+}
 
